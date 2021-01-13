@@ -3,7 +3,7 @@ import { Input as SInput } from 'semantic-ui-react'
 
 interface Props {
   value: string
-  onChange: (value: string) => void
+  onChange?: (value: string) => void
   style?: CSSProperties
 }
 
@@ -16,7 +16,7 @@ const Input = ({ value, onChange, style }: Props) => {
 
   const update = useCallback(() => {
     setCurrentValue((prev) => {
-      if (prev !== value) onChange(prev)
+      if (prev !== value && onChange) onChange(prev)
       return prev
     })
   }, [onChange, value])
@@ -44,6 +44,7 @@ const Input = ({ value, onChange, style }: Props) => {
       onBlur={handleBlur}
       style={style}
       size='small'
+      disabled={!onChange}
     />
   )
 }

@@ -6,6 +6,7 @@ import ExampleProps from './client/ExampleProps'
 import UpdateItem from './client/UpdateItem'
 import ExampleUseSelector from './client/ExampleUseSelector'
 import ExampleUseSelectorMemo from './client/ExampleUseSelectorMemo'
+import ExampleHooks from './client/ExampleHooks'
 
 function App() {
   const panes = [
@@ -14,6 +15,14 @@ function App() {
       render: () => (
         <Tab.Pane>
           <ExampleProps />
+        </Tab.Pane>
+      ),
+    },
+    {
+      menuItem: 'useCallback & useMemo',
+      render: () => (
+        <Tab.Pane>
+          <ExampleHooks />
         </Tab.Pane>
       ),
     },

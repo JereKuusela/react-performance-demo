@@ -14,7 +14,7 @@ const getColor = (previous: string) => {
   }
 }
 
-export const TrackingInput = ({ value, onChange }: { value: string; onChange: (value: string) => void }) => {
+export const TrackingInput = ({ value, onChange }: { value: string; onChange?: (value: string) => void }) => {
   const ref = useRef('white')
   useEffect(() => {
     console.log('input rendering')
