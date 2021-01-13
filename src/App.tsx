@@ -2,24 +2,43 @@ import React from 'react'
 import { Container, Tab } from 'semantic-ui-react'
 import './App.css'
 import 'semantic-ui-css/semantic.min.css'
-import ReceiveItem from './client/ReceiveItem'
+import ExampleProps from './client/ExampleProps'
 import UpdateItem from './client/UpdateItem'
+import ExampleUseSelector from './client/ExampleUseSelector'
+import ExampleUseSelectorMemo from './client/ExampleUseSelectorMemo'
 
 function App() {
   const panes = [
     {
-      menuItem: 'Update item',
+      menuItem: 'Props & memo',
       render: () => (
         <Tab.Pane>
-          <UpdateItem />
+          <ExampleProps />
         </Tab.Pane>
       ),
     },
     {
-      menuItem: 'Receive item',
+      menuItem: 'useSelector',
       render: () => (
         <Tab.Pane>
-          <ReceiveItem />
+          <ExampleUseSelector />
+        </Tab.Pane>
+      ),
+    },
+    {
+      menuItem: 'useSelector memo',
+      render: () => (
+        <Tab.Pane>
+          <ExampleUseSelectorMemo />
+        </Tab.Pane>
+      ),
+    },
+    {
+      menuItem: 'Update item',
+
+      render: () => (
+        <Tab.Pane>
+          <UpdateItem />
         </Tab.Pane>
       ),
     },

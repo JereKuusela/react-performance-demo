@@ -1,9 +1,10 @@
 import React from 'react'
 import { PropsWithChildren } from 'react'
-import { Header, ListList } from 'semantic-ui-react'
+import { Divider, Header, ListList } from 'semantic-ui-react'
 
 const List = ({ header, children }: PropsWithChildren<{ header: string }>) => (
   <>
+    <Divider size='small' />
     <Header>{header}</Header>
     <ListList>{children}</ListList>
   </>

@@ -11,7 +11,7 @@ interface DataState {
 }
 
 const initialState: DataState = {
-  names: Array(30)
+  names: Array(50)
     .fill(null)
     .map(() => [
       { index: 0, first: 'John', last: 'Doe' },

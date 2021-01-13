@@ -14,15 +14,38 @@ const Input = ({ value, onChange, style }: Props) => {
     setCurrentValue(value)
   }, [value])
 
+  const update = useCallback(() => {
+    setCurrentValue((prev) => {
+      if (prev !== value) onChange(prev)
+      return prev
+    })
+  }, [onChange, value])
+
   const handleBlur = useCallback(() => {
-    onChange(currentValue)
-  }, [onChange, currentValue])
+    update()
+  }, [update])
+
+  const handleKeyPress = useCallback(
+    ({ key }) => {
+      if (key === 'Enter') update()
+    },
+    [update]
+  )
 
   const handleChange = useCallback((event: React.ChangeEvent<HTMLInputElement>) => {
     setCurrentValue(event.target.value)
   }, [])
 
-  return <SInput value={currentValue} onChange={handleChange} onBlur={handleBlur} style={style} size='small' />
+  return (
+    <SInput
+      value={currentValue}
+      onKeyPress={handleKeyPress}
+      onChange={handleChange}
+      onBlur={handleBlur}
+      style={style}
+      size='small'
+    />
+  )
 }
 
 export default Input

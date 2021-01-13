@@ -1,4 +1,4 @@
-import React, { useRef } from 'react'
+import React from 'react'
 import { ItemProps, ListItem } from 'semantic-ui-react'
 import { getInstanceNumber } from '../app/utils'
 import Grid from '../components/Grid'
@@ -16,16 +16,16 @@ const UpdateItem = () => (
 )
 
 const RenderItemWithSetList = () => {
-  const instance = useRef(getInstanceNumber())
-  const data = useData(instance.current)
+  const instance = getInstanceNumber('RenderItemWithSetList')
+  const data = useData(instance)
   return (
     <Grid>
       <List header='Update by setting the whole entity'>
         {data.map((item) => (
-          <RenderItemWithSet item={item} key={item.index} instance={instance.current} />
+          <RenderItemWithSet item={item} key={item.index} instance={instance} />
         ))}
       </List>
-      <ServerData instance={instance.current} />
+      <ServerData instance={instance} />
     </Grid>
   )
 }
@@ -42,16 +42,16 @@ const RenderItemWithSet = ({ item, instance }: ItemProps) => {
 }
 
 const RenderItemWithDelayList = () => {
-  const instance = useRef(getInstanceNumber())
-  const data = useData(instance.current)
+  const instance = getInstanceNumber('RenderItemWithDelayList')
+  const data = useData(instance)
   return (
     <Grid>
       <List header='With delay'>
         {data.map((item) => (
-          <RenderItemWithDelay item={item} key={item.index} instance={instance.current} />
+          <RenderItemWithDelay item={item} key={item.index} instance={instance} />
         ))}
       </List>
-      <ServerData instance={instance.current} />
+      <ServerData instance={instance} />
     </Grid>
   )
 }
@@ -68,16 +68,16 @@ const RenderItemWithDelay = ({ item, instance }: ItemProps) => {
 }
 
 const RenderItemByAttributeList = () => {
-  const instance = useRef(getInstanceNumber())
-  const data = useData(instance.current)
+  const instance = getInstanceNumber('RenderItemByAttributeList')
+  const data = useData(instance)
   return (
     <Grid>
       <List header='Update by only setting the attribute'>
         {data.map((item) => (
-          <RenderItemByAttribute item={item} key={item.index} instance={instance.current} />
+          <RenderItemByAttribute item={item} key={item.index} instance={instance} />
         ))}
       </List>
-      <ServerData instance={instance.current} />
+      <ServerData instance={instance} />
     </Grid>
   )
 }
