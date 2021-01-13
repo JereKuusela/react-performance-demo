@@ -1,29 +1,20 @@
 import React from 'react'
 import { ListItem } from 'semantic-ui-react'
 import { ItemProps } from '../app/utils'
-import { useData, useUpdateByAttribute } from '../client/hooks'
+import { useUpdate } from '../client/actions'
 import Input from '../components/Input'
-import List from '../components/List'
+import DataList from '../client/DataList'
 
-const ServerData = ({ instance }: { instance: number }) => {
-  const data = useData(instance)
-  return (
-    <List header='Server data'>
-      {data.map((item) => (
-        <RenderItem item={item} instance={instance} key={item.index} />
-      ))}
-    </List>
-  )
-}
+const ServerData = ({ name }: { name: string }) => <DataList header='Server data' name={name} Component={RenderItem} />
 
 const RenderItem = ({ item, instance }: ItemProps) => {
   const { first, last, index } = item
-  const { handleFirstChange, handleLastChange } = useUpdateByAttribute(instance, index)
+  const { handleFirstChange, handleLastChange } = useUpdate(instance, index)
 
   return (
     <ListItem>
-      <Input style={{ padding: 5 }} value={first} onChange={handleFirstChange} />
-      <Input style={{ padding: 5 }} value={last} onChange={handleLastChange} />
+      <Input value={first} onChange={handleFirstChange} />
+      <Input value={last} onChange={handleLastChange} />
     </ListItem>
   )
 }

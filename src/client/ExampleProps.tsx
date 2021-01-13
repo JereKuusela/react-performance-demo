@@ -1,10 +1,9 @@
 import React, { memo } from 'react'
 import { Header, ItemProps, ListItem } from 'semantic-ui-react'
-import { getInstanceNumber } from '../app/utils'
 import { Item } from '../server/reducer'
-import { useData, useUpdateByAttribute } from './hooks'
-import List from '../components/List'
+import { useUpdate } from './actions'
 import { MemoizedTrackingInput, TrackingInput } from '../components/TrackingInput'
+import DataList from './DataList'
 
 const ExampleProps = () => {
   return (
@@ -13,29 +12,33 @@ const ExampleProps = () => {
         Components render when parent renders. This can be prevented with memo which makes the component only render
         when props change.
       </Header>
-      <RenderWithItem />
-      <RenderWithMemoizedItem />
-      <RenderWithAttribute />
-      <RenderWithMemoizedAttribute />
+      <DataList
+        name='ExampleProps_Item'
+        header='Inputs use the whole name object. Without memo, everything renders on change.'
+        Component={WithItem}
+      />
+      <DataList
+        name='ExampleProps_MemoizedItem'
+        header='With memo, only the changed row renders.'
+        Component={WithMemoizedItem}
+      />
+      <DataList
+        name='ExampleProps_Attribute'
+        header='Inputs to use only the value. Without memo, everything still renders on change.'
+        Component={WithAttribute}
+      />
+      <DataList
+        name='ExampleProps_MemoizedAttribute'
+        header='With memo, only the changed input renders.'
+        Component={WithMemoizedAttribute}
+      />
     </>
   )
 }
 
-const RenderWithItem = () => {
-  const instance = getInstanceNumber('RenderWithItem')
-  const data = useData(instance)
-  return (
-    <List header='Inputs use the whole name object. Without memo, everything renders on change.'>
-      {data.map((item) => (
-        <RenderItemWithItem item={item} key={item.index} instance={instance} />
-      ))}
-    </List>
-  )
-}
-
-const RenderItemWithItem = ({ item, instance }: ItemProps) => {
+const WithItem = ({ item, instance }: ItemProps) => {
   const { index } = item
-  const { handleFirstChange, handleLastChange } = useUpdateByAttribute(instance, index)
+  const { handleFirstChange, handleLastChange } = useUpdate(instance, index)
 
   return (
     <ListItem>
@@ -45,21 +48,9 @@ const RenderItemWithItem = ({ item, instance }: ItemProps) => {
   )
 }
 
-const RenderWithMemoizedItem = () => {
-  const instance = getInstanceNumber('RenderWithMemoizedItem')
-  const data = useData(instance)
-  return (
-    <List header='With memo, only the changed row renders.'>
-      {data.map((item) => (
-        <RenderItemWithMemoizedItem item={item} key={item.index} instance={instance} />
-      ))}
-    </List>
-  )
-}
-
-const RenderItemWithMemoizedItem = ({ item, instance }: ItemProps) => {
+const WithMemoizedItem = ({ item, instance }: ItemProps) => {
   const { index } = item
-  const { handleFirstChange, handleLastChange } = useUpdateByAttribute(instance, index)
+  const { handleFirstChange, handleLastChange } = useUpdate(instance, index)
 
   return (
     <ListItem>
@@ -69,21 +60,9 @@ const RenderItemWithMemoizedItem = ({ item, instance }: ItemProps) => {
   )
 }
 
-const RenderWithAttribute = () => {
-  const instance = getInstanceNumber('RenderWithAttribute')
-  const data = useData(instance)
-  return (
-    <List header='Inputs to use only the value. Without memo, everything still renders on change.'>
-      {data.map((item) => (
-        <RenderItemWithAttribute item={item} key={item.index} instance={instance} />
-      ))}
-    </List>
-  )
-}
-
-const RenderItemWithAttribute = ({ item, instance }: ItemProps) => {
+const WithAttribute = ({ item, instance }: ItemProps) => {
   const { first, last, index } = item
-  const { handleFirstChange, handleLastChange } = useUpdateByAttribute(instance, index)
+  const { handleFirstChange, handleLastChange } = useUpdate(instance, index)
 
   return (
     <ListItem>
@@ -93,21 +72,9 @@ const RenderItemWithAttribute = ({ item, instance }: ItemProps) => {
   )
 }
 
-const RenderWithMemoizedAttribute = () => {
-  const instance = getInstanceNumber('RenderWithMemoizedAttribute')
-  const data = useData(instance)
-  return (
-    <List header='With memo, only the changed input renders.'>
-      {data.map((item) => (
-        <RenderItemWithMemoizedAttribute item={item} key={item.index} instance={instance} />
-      ))}
-    </List>
-  )
-}
-
-const RenderItemWithMemoizedAttribute = ({ item, instance }: ItemProps) => {
+const WithMemoizedAttribute = ({ item, instance }: ItemProps) => {
   const { first, last, index } = item
-  const { handleFirstChange, handleLastChange } = useUpdateByAttribute(instance, index)
+  const { handleFirstChange, handleLastChange } = useUpdate(instance, index)
 
   return (
     <ListItem>

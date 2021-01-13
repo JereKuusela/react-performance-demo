@@ -1,11 +1,10 @@
 import React from 'react'
 import { ItemProps, ListItem } from 'semantic-ui-react'
-import { getInstanceNumber } from '../app/utils'
 import Grid from '../components/Grid'
-import { useData, useUpdateByDelayedAttribute, useUpdateWithDelayedSet, useUpdateWithSet } from './hooks'
+import { useUpdateByDelayedAttribute, useUpdateWithDelayedSet, useUpdateWithSet } from './actions'
 import Input from '../components/Input'
-import List from '../components/List'
 import ServerData from '../server/ServerData'
+import DataList from './DataList'
 
 const UpdateItem = () => (
   <>
@@ -15,20 +14,12 @@ const UpdateItem = () => (
   </>
 )
 
-const RenderItemWithSetList = () => {
-  const instance = getInstanceNumber('RenderItemWithSetList')
-  const data = useData(instance)
-  return (
-    <Grid>
-      <List header='Update by setting the whole entity'>
-        {data.map((item) => (
-          <RenderItemWithSet item={item} key={item.index} instance={instance} />
-        ))}
-      </List>
-      <ServerData instance={instance} />
-    </Grid>
-  )
-}
+const RenderItemWithSetList = () => (
+  <Grid>
+    <DataList header='With entity' name='UpdateItem_Set' Component={RenderItemWithSet} />
+    <ServerData name='UpdateItem_Set' />
+  </Grid>
+)
 
 const RenderItemWithSet = ({ item, instance }: ItemProps) => {
   const { first, last } = item
@@ -41,20 +32,12 @@ const RenderItemWithSet = ({ item, instance }: ItemProps) => {
   )
 }
 
-const RenderItemWithDelayList = () => {
-  const instance = getInstanceNumber('RenderItemWithDelayList')
-  const data = useData(instance)
-  return (
-    <Grid>
-      <List header='With delay'>
-        {data.map((item) => (
-          <RenderItemWithDelay item={item} key={item.index} instance={instance} />
-        ))}
-      </List>
-      <ServerData instance={instance} />
-    </Grid>
-  )
-}
+const RenderItemWithDelayList = () => (
+  <Grid>
+    <DataList header='With delay' name='UpdateItem_Delay' Component={RenderItemWithDelay} />
+    <ServerData name='UpdateItem_Delay' />
+  </Grid>
+)
 
 const RenderItemWithDelay = ({ item, instance }: ItemProps) => {
   const { first, last } = item
@@ -67,20 +50,12 @@ const RenderItemWithDelay = ({ item, instance }: ItemProps) => {
   )
 }
 
-const RenderItemByAttributeList = () => {
-  const instance = getInstanceNumber('RenderItemByAttributeList')
-  const data = useData(instance)
-  return (
-    <Grid>
-      <List header='Update by only setting the attribute'>
-        {data.map((item) => (
-          <RenderItemByAttribute item={item} key={item.index} instance={instance} />
-        ))}
-      </List>
-      <ServerData instance={instance} />
-    </Grid>
-  )
-}
+const RenderItemByAttributeList = () => (
+  <Grid>
+    <DataList header='With attribute' name='UpdateItem_Attribute' Component={RenderItemByAttribute} />
+    <ServerData name='UpdateItem_Attribute' />
+  </Grid>
+)
 
 const RenderItemByAttribute = ({ item, instance }: ItemProps) => {
   const { first, last, index } = item

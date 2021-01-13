@@ -1,38 +1,42 @@
 import React, { memo } from 'react'
 import { Header, ItemProps, ListItem } from 'semantic-ui-react'
-import { getInstanceNumber } from '../app/utils'
-import { useAllData, useData, useFirstName, useLastName, useName, useUpdateByAttribute } from './hooks'
-import List from '../components/List'
+import { useUpdate } from './actions'
 import { TrackingInput } from '../components/TrackingInput'
+import { useData, useAllData, useName, useFirstName, useLastName } from './selectors'
+import DataList from './DataList'
 
 const ExampleUseSelector = () => {
   return (
     <>
       <Header>useSelector forces render if the return value changes.</Header>
       <Header>So universal hooks will cause unnecessary renders even the component data doesn't change.</Header>
-      <RenderWithAllData />
-      <RenderWithData />
-      <RenderWithName />
-      <RenderWithAttribute />
+      <DataList
+        name='ExampleUseSelector_AllData'
+        header='Uses data from all instances. Renders even when other components change.'
+        Component={WithAllData}
+      />
+      <DataList
+        name='ExampleUseSelector_Data'
+        header='Uses all data from own instance. All inputs render.'
+        Component={WithData}
+      />
+      <DataList
+        name='ExampleUseSelector_Name'
+        header='Uses the whole name object. The whole row renders.'
+        Component={WithName}
+      />
+      <DataList
+        name='ExampleUseSelector_Attribute'
+        header='Uses only the needed attribute. Only the changed value renders.'
+        Component={WithAttribute}
+      />
     </>
   )
 }
 
-const RenderWithAllData = () => {
-  const instance = getInstanceNumber('RenderWithAllData')
-  const data = useData(instance)
-  return (
-    <List header='Uses data from all instances. Renders even when other components change.'>
-      {data.map((item) => (
-        <RenderItemWithAllData item={item} key={item.index} instance={instance} />
-      ))}
-    </List>
-  )
-}
-
-const RenderItemWithAllData = ({ item, instance }: ItemProps) => {
+const WithAllData = ({ item, instance }: ItemProps) => {
   const { index } = item
-  const { handleFirstChange, handleLastChange } = useUpdateByAttribute(instance, index)
+  const { handleFirstChange, handleLastChange } = useUpdate(instance, index)
 
   return (
     <ListItem>
@@ -42,21 +46,9 @@ const RenderItemWithAllData = ({ item, instance }: ItemProps) => {
   )
 }
 
-const RenderWithData = () => {
-  const instance = getInstanceNumber('RenderWithData')
-  const data = useData(instance)
-  return (
-    <List header='Uses all data from own instance. All inputs render.'>
-      {data.map((item) => (
-        <RenderItemWithData item={item} key={item.index} instance={instance} />
-      ))}
-    </List>
-  )
-}
-
-const RenderItemWithData = ({ item, instance }: ItemProps) => {
+const WithData = ({ item, instance }: ItemProps) => {
   const { index } = item
-  const { handleFirstChange, handleLastChange } = useUpdateByAttribute(instance, index)
+  const { handleFirstChange, handleLastChange } = useUpdate(instance, index)
 
   return (
     <ListItem>
@@ -66,21 +58,9 @@ const RenderItemWithData = ({ item, instance }: ItemProps) => {
   )
 }
 
-const RenderWithName = () => {
-  const instance = getInstanceNumber('RenderWithName')
-  const data = useData(instance)
-  return (
-    <List header='Uses the whole name object. The whole row renders.'>
-      {data.map((item) => (
-        <RenderItemWithName item={item} key={item.index} instance={instance} />
-      ))}
-    </List>
-  )
-}
-
-const RenderItemWithName = ({ item, instance }: ItemProps) => {
+const WithName = ({ item, instance }: ItemProps) => {
   const { index } = item
-  const { handleFirstChange, handleLastChange } = useUpdateByAttribute(instance, index)
+  const { handleFirstChange, handleLastChange } = useUpdate(instance, index)
 
   return (
     <ListItem>
@@ -90,21 +70,9 @@ const RenderItemWithName = ({ item, instance }: ItemProps) => {
   )
 }
 
-const RenderWithAttribute = () => {
-  const instance = getInstanceNumber('RenderWithAttribute')
-  const data = useData(instance)
-  return (
-    <List header='Uses only the needed attribute. Only the changed value renders.'>
-      {data.map((item) => (
-        <RenderItemWithAttribute item={item} key={item.index} instance={instance} />
-      ))}
-    </List>
-  )
-}
-
-const RenderItemWithAttribute = ({ item, instance }: ItemProps) => {
+const WithAttribute = ({ item, instance }: ItemProps) => {
   const { index } = item
-  const { handleFirstChange, handleLastChange } = useUpdateByAttribute(instance, index)
+  const { handleFirstChange, handleLastChange } = useUpdate(instance, index)
 
   return (
     <ListItem>
