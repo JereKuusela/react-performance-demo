@@ -1,4 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
+import { canAct } from '../app/utils'
 
 export interface Item {
   index: number
@@ -8,6 +9,7 @@ export interface Item {
 
 interface DataState {
   names: Item[][]
+  clicks: number
 }
 
 const initialState: DataState = {
@@ -17,6 +19,7 @@ const initialState: DataState = {
       { index: 0, first: 'John', last: 'Doe' },
       { index: 1, first: 'Jane', last: 'Doe' },
     ]),
+  clicks: 1,
 }
 
 export const slice = createSlice({
@@ -37,11 +40,28 @@ export const slice = createSlice({
     },
     add: (state, { payload }: PayloadAction<[number]>) => {
       const [instance] = payload
-      state.names[instance].push({ index: state.names.length, first: '', last: '' })
+      state.names[instance].push({ index: state.names[instance].length, first: '', last: '' })
     },
     remove: (state, { payload }: PayloadAction<[number]>) => {
       const [instance] = payload
       state.names[instance].pop()
+    },
+    addWithLogic: (state, { payload }: PayloadAction<[number]>) => {
+      if (canAct(state.clicks)) {
+        const [instance] = payload
+        state.names[instance].push({ index: state.names[instance].length, first: '', last: '' })
+      }
+      state.clicks++
+    },
+    removeWithLogic: (state, { payload }: PayloadAction<[number]>) => {
+      if (canAct(state.clicks)) {
+        const [instance] = payload
+        state.names[instance].pop()
+      }
+      state.clicks++
+    },
+    addClick: (state) => {
+      state.clicks++
     },
   },
 })
@@ -60,12 +80,15 @@ export const set = unboxParameters(slice.actions.set)
 export const setFirstName = unboxParameters(slice.actions.setFirstName)
 export const setLastName = unboxParameters(slice.actions.setLastName)
 export const add = unboxParameters(slice.actions.add)
-export const remove = unboxParameters(slice.actions.remove)
+export const remove = unboxParameters(slice.actions.removeWithLogic)
+export const addWithLogic = unboxParameters(slice.actions.addWithLogic)
+export const removeWithLogic = unboxParameters(slice.actions.removeWithLogic)
 
 export const setWithDelay = withDelayAndUnbox(slice.actions.set)
 export const setFirstNameWithDelay = withDelayAndUnbox(slice.actions.setFirstName)
 export const setLastNameWithDelay = withDelayAndUnbox(slice.actions.setLastName)
 export const addWithDelay = withDelayAndUnbox(slice.actions.add)
 export const removeWithDelay = withDelayAndUnbox(slice.actions.remove)
+export const addClick = slice.actions.addClick
 
 export default slice.reducer

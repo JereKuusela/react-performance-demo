@@ -2,6 +2,7 @@ import { useMemo } from 'react'
 import { useSelector, shallowEqual } from 'react-redux'
 import { createSelector } from 'reselect'
 import { RootState } from '../app/store'
+import { canAct } from '../app/utils'
 
 const getAllData = (state: RootState) => state.server.names
 const getData = (state: RootState, instance: number) => getAllData(state)[instance]
@@ -64,3 +65,7 @@ export const useNameDeepArrayWithCustomReselect = (instance: number, index: numb
   const selector = useMemo(() => createNnameDeepArraySelector(), [])
   return useSelector((state: RootState) => selector(state, [instance, index]))
 }
+
+export const useClicks = () => useSelector((state: RootState) => state.server.clicks)
+
+export const useCanAct = () => useSelector((state: RootState) => canAct(state.server.clicks))

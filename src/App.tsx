@@ -7,6 +7,7 @@ import UpdateItem from './client/UpdateItem'
 import ExampleUseSelector from './client/ExampleUseSelector'
 import ExampleUseSelectorMemo from './client/ExampleUseSelectorMemo'
 import ExampleHooks from './client/ExampleHooks'
+import ExampleUseState from './client/ExampleUseState'
 
 function App() {
   const panes = [
@@ -23,6 +24,14 @@ function App() {
       render: () => (
         <Tab.Pane>
           <ExampleHooks />
+        </Tab.Pane>
+      ),
+    },
+    {
+      menuItem: 'useState & useRef',
+      render: () => (
+        <Tab.Pane>
+          <ExampleUseState />
         </Tab.Pane>
       ),
     },
@@ -56,6 +65,20 @@ function App() {
   return (
     <Container>
       <Tab panes={panes} />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
     </Container>
   )
 }

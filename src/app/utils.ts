@@ -12,3 +12,4 @@ export type ItemProps = {
   item: Item
   instance: number
 }
+export const canAct = (value: number) => value % 5 === 0

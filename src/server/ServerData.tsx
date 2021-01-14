@@ -1,9 +1,9 @@
 import React from 'react'
 import { ListItem } from 'semantic-ui-react'
-import { ItemProps } from '../app/utils'
 import { useUpdate } from '../client/actions'
 import Input from '../components/Input'
 import DataList from '../client/DataList'
+import { ItemProps } from '../app/utils'
 
 const ServerData = ({ name }: { name: string }) => <DataList header='Server data' name={name} Component={RenderItem} />
 
