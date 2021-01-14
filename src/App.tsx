@@ -3,7 +3,7 @@ import { Container, Tab } from 'semantic-ui-react'
 import './App.css'
 import 'semantic-ui-css/semantic.min.css'
 import ExampleProps from './client/ExampleProps'
-import UpdateItem from './client/UpdateItem'
+import ExampleUpdating from './client/ExampleUpdating'
 import ExampleUseSelector from './client/ExampleUseSelector'
 import ExampleUseSelectorMemo from './client/ExampleUseSelectorMemo'
 import ExampleHooks from './client/ExampleHooks'
@@ -12,7 +12,7 @@ import ExampleUseState from './client/ExampleUseState'
 function App() {
   const panes = [
     {
-      menuItem: 'Props & memo',
+      menuItem: 'props & memo',
       render: () => (
         <Tab.Pane>
           <ExampleProps />
@@ -28,18 +28,18 @@ function App() {
       ),
     },
     {
-      menuItem: 'useState & useRef',
-      render: () => (
-        <Tab.Pane>
-          <ExampleUseState />
-        </Tab.Pane>
-      ),
-    },
-    {
       menuItem: 'useSelector',
       render: () => (
         <Tab.Pane>
           <ExampleUseSelector />
+        </Tab.Pane>
+      ),
+    },
+    {
+      menuItem: 'useState & useRef',
+      render: () => (
+        <Tab.Pane>
+          <ExampleUseState />
         </Tab.Pane>
       ),
     },
@@ -56,7 +56,7 @@ function App() {
 
       render: () => (
         <Tab.Pane>
-          <UpdateItem />
+          <ExampleUpdating />
         </Tab.Pane>
       ),
     },

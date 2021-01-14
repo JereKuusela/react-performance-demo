@@ -15,8 +15,8 @@ const DataList = <C extends unknown>({ header, name, Component, componentProps }
   const data = useData(instance)
   return (
     <>
-      <Divider size='small' />
-      <Header>{header}</Header>
+      <Divider />
+      <Header size='small'>{header}</Header>
       <List>
         {data.map((item) => (
           <Component item={item} key={item.index} instance={instance} {...componentProps} />

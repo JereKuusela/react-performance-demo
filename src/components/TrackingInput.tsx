@@ -7,7 +7,9 @@ export const TrackingInput = ({ value, onChange }: { value: string; onChange?: (
   useEffect(() => {
     ref.current = getColor(ref.current)
   })
-  return <Input value={value} onChange={onChange} style={{ backgroundColor: ref.current, padding: 5 }} />
+  return (
+    <Input value={value} onChange={onChange} style={{ backgroundColor: ref.current, padding: 5, marginRight: 5 }} />
+  )
 }
 
 export const MemoizedTrackingInput = memo(TrackingInput)

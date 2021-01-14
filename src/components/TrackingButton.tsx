@@ -8,7 +8,11 @@ const TrackingButton = ({ children, onClick }: PropsWithChildren<{ onClick: () =
     ref.current = getColor(ref.current)
   })
   return (
-    <Button onClick={onClick} style={{ backgroundColor: ref.current, padding: 5 }}>
+    <Button
+      onClick={onClick}
+      style={{ backgroundColor: ref.current, padding: 5, border: 'solid 2px black', width: 40, height: 40 }}
+      circular
+    >
       {children}
     </Button>
   )

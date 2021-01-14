@@ -8,8 +8,14 @@ export const getInstanceNumber = (name: string) => {
   return instances[name]
 }
 
+export type UpdateHook = (
+  instance: number,
+  index: number
+) => { handleFirstChange: (first: string) => void; handleLastChange: (first: string) => void }
+
 export type ItemProps = {
   item: Item
   instance: number
+  useHook?: UpdateHook
 }
-export const canAct = (value: number) => value % 5 === 0
+export const canAct = (value: number) => value % 3 === 0

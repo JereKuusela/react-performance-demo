@@ -1,5 +1,5 @@
 import React from 'react'
-import { Divider, Header, ListItem } from 'semantic-ui-react'
+import { Divider, Header } from 'semantic-ui-react'
 import DataList from './DataList'
 import TrackingButton from '../components/TrackingButton'
 import {
@@ -10,15 +10,13 @@ import {
   useButtonHandlersWithImprovedRedux,
   useButtonHandlersWithFixedRedux,
 } from './buttonActions'
-import { TrackingInput } from '../components/TrackingInput'
-import { useUpdate } from './actions'
-import { ItemProps } from '../app/utils'
+import { NameInputs } from './NameInputs'
 
 const ExampleUseState = () => {
   return (
     <>
       <Header>
-        In the following example, add and remove buttons only work every 5th click. No memoization is used.
+        In the following example, add and remove buttons only work every 3th click. <u>No memoization</u> is used.
       </Header>
       <UseState />
       <ItemList
@@ -62,7 +60,7 @@ const UseState = () => {
   const { handleAdd, handleRemove } = useButtonHandlersWithState(name)
   return (
     <>
-      <DataList name={name} header='With useState, every click renders everything.' Component={RenderItem} />
+      <DataList name={name} header='With useState, every click renders everything.' Component={NameInputs} />
       <TrackingButton onClick={handleAdd}>+</TrackingButton>
       <TrackingButton onClick={handleRemove}>-</TrackingButton>
     </>
@@ -75,7 +73,7 @@ interface Props extends ButtonProps {
 
 const ItemList = ({ header, name, useHook }: Props) => (
   <>
-    <DataList name={name} header={header} Component={RenderItem} />
+    <DataList name={name} header={header} Component={NameInputs} />
     <Buttons name={name} useHook={useHook} />
   </>
 )
@@ -92,18 +90,6 @@ const Buttons = ({ name, useHook }: ButtonProps) => {
       <TrackingButton onClick={handleAdd}>+</TrackingButton>
       <TrackingButton onClick={handleRemove}>-</TrackingButton>
     </>
-  )
-}
-
-const RenderItem = ({ item, instance }: ItemProps) => {
-  const { index, first, last } = item
-  const { handleFirstChange, handleLastChange } = useUpdate(instance, index)
-
-  return (
-    <ListItem>
-      <TrackingInput value={first} onChange={handleFirstChange} />
-      <TrackingInput value={last} onChange={handleLastChange} />
-    </ListItem>
   )
 }
 

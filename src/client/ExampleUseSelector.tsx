@@ -8,8 +8,8 @@ import DataList from './DataList'
 const ExampleUseSelector = () => {
   return (
     <>
-      <Header>useSelector forces render if the return value changes.</Header>
-      <Header>So universal hooks will cause unnecessary renders even the component data doesn't change.</Header>
+      <Header>useSelector forces a render if the return value changes.</Header>
+      <Header>So universal hooks will cause unnecessary renders even when the component data doesn't change.</Header>
       <DataList
         name='ExampleUseSelector_AllData'
         header='Uses data from all instances. Renders even when other components change.'
@@ -87,6 +87,7 @@ interface DataProps {
   index: number
   onChange: (value: string) => void
 }
+
 const RenderFirstNameWithAllData = memo(({ instance, index, onChange }: DataProps) => {
   const value = useAllData()[instance][index].first
   return <TrackingInput value={value} onChange={onChange} />

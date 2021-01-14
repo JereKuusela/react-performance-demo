@@ -1,7 +1,5 @@
 import React, { memo } from 'react'
-import { Divider, Header, ItemProps, ListItem } from 'semantic-ui-react'
-import { useUpdate } from './actions'
-import { TrackingInput } from '../components/TrackingInput'
+import { Divider, Header, ItemProps } from 'semantic-ui-react'
 import {
   useNameArray,
   useNameArrayWithShallow,
@@ -12,6 +10,7 @@ import {
   useNameDeepArrayWithCustomReselect,
 } from './selectors'
 import DataList from './DataList'
+import { NameInputsFromAttribute } from './NameInputs'
 
 const ExampleUseSelectorMemo = () => {
   return (
@@ -22,7 +21,7 @@ const ExampleUseSelectorMemo = () => {
       </Header>
       <DataList
         name='ExampleUseSelectorMemo_Array'
-        header='By default, this always forces a render because the reference always changes.'
+        header='By default, this renders botj rows because the reference always changes.'
         Component={RenderItem}
         componentProps={{ selector: useNameArray }}
       />
@@ -38,7 +37,7 @@ const ExampleUseSelectorMemo = () => {
       </Header>
       <DataList
         name='ExampleUseSelectorMemo_DeepArray'
-        header='This means the shallowEqual no longer works'
+        header='This means the shallowEqual no longer works and both rows render.'
         Component={RenderDeepItem}
         componentProps={{ selector: useNameDeepArray }}
       />
@@ -50,7 +49,7 @@ const ExampleUseSelectorMemo = () => {
       />
       <DataList
         name='ExampleUseSelectorMemo_DeepArrayWithMemo'
-        header='useMemo "works" but has to be outside of useSelector so it actually doesn&apos;t prevent forced renders.'
+        header='useMemo "works" in this case but has to be outside of useSelector so it can&apos;t be used to prevent forced renders.'
         Component={RenderDeepItem}
         componentProps={{ selector: useNameDeepArrayWithMemo }}
       />
@@ -78,15 +77,9 @@ interface Props extends ItemProps {
 
 const RenderItem = memo(({ item, instance, selector }: Props) => {
   const { index } = item
-  const { handleFirstChange, handleLastChange } = useUpdate(instance, index)
   const [first, last] = selector(instance, index)
 
-  return (
-    <ListItem>
-      <TrackingInput value={first} onChange={handleFirstChange} />
-      <TrackingInput value={last} onChange={handleLastChange} />
-    </ListItem>
-  )
+  return <NameInputsFromAttribute first={first} last={last} index={index} instance={instance} />
 })
 
 type DeepSelector = (instance: number, index: number) => string[][]
@@ -97,15 +90,9 @@ interface DeepProps extends ItemProps {
 
 const RenderDeepItem = memo(({ item, instance, selector }: DeepProps) => {
   const { index } = item
-  const { handleFirstChange, handleLastChange } = useUpdate(instance, index)
   const [[first], [last]] = selector(instance, index)
 
-  return (
-    <ListItem>
-      <TrackingInput value={first} onChange={handleFirstChange} />
-      <TrackingInput value={last} onChange={handleLastChange} />
-    </ListItem>
-  )
+  return <NameInputsFromAttribute first={first} last={last} index={index} instance={instance} />
 })
 
 export default ExampleUseSelectorMemo
