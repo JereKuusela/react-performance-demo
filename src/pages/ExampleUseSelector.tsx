@@ -1,9 +1,9 @@
 import React, { memo } from 'react'
 import { Header, ItemProps, ListItem } from 'semantic-ui-react'
-import { useUpdate } from './actions'
+import { useUpdate } from '../app/actions'
 import { TrackingInput } from '../components/TrackingInput'
-import { useData, useAllData, useName, useFirstName, useLastName } from './selectors'
-import DataList from './DataList'
+import { useData, useAllData, useName, useFirstName, useLastName } from '../app/selectors'
+import DataList from '../components/DataList'
 
 const ExampleUseSelector = () => {
   return (

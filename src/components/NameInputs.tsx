@@ -1,9 +1,9 @@
 import React, { PropsWithChildren } from 'react'
 import { ListItem } from 'semantic-ui-react'
 import { ItemProps, UpdateHook } from '../app/utils'
-import Input from '../components/Input'
-import { MemoizedTrackingInput, TrackingInput } from '../components/TrackingInput'
-import { useUpdate } from './actions'
+import Input from './Input'
+import { MemoizedTrackingInput, TrackingInput } from './TrackingInput'
+import { useUpdate } from '../app/actions'
 
 export const MemoizedNameInputs = ({ item, instance, useHook, children }: PropsWithChildren<ItemProps>) => {
   const { first, last, index } = item

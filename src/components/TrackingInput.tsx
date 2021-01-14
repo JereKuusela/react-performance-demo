@@ -8,7 +8,11 @@ export const TrackingInput = ({ value, onChange }: { value: string; onChange?: (
     ref.current = getColor(ref.current)
   })
   return (
-    <Input value={value} onChange={onChange} style={{ backgroundColor: ref.current, padding: 5, marginRight: 5 }} />
+    <Input
+      value={value}
+      onChange={onChange}
+      style={{ backgroundColor: ref.current, padding: 5, marginRight: 5, borderRadius: 5 }}
+    />
   )
 }
 

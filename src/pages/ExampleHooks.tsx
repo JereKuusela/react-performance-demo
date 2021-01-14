@@ -1,10 +1,10 @@
 import React, { memo, useMemo } from 'react'
 import { Divider, Header } from 'semantic-ui-react'
-import { useUpdateWithoutUseCallback } from './actions'
+import { useUpdateWithoutUseCallback } from '../app/actions'
 import { MemoizedTrackingInput, TrackingInput } from '../components/TrackingInput'
-import DataList from './DataList'
+import DataList from '../components/DataList'
 import { ItemProps } from '../app/utils'
-import { MemoizedNameInputs, NameInputs } from './NameInputs'
+import { MemoizedNameInputs, NameInputs } from '../components/NameInputs'
 
 const ExampleHooks = () => {
   return (

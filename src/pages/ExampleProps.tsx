@@ -1,10 +1,10 @@
 import React, { memo } from 'react'
 import { Divider, Header, ItemProps, ListItem } from 'semantic-ui-react'
-import { Item } from '../server/reducer'
-import { useUpdate } from './actions'
+import { Item } from '../app/reducer'
+import { useUpdate } from '../app/actions'
 import { TrackingInput } from '../components/TrackingInput'
-import DataList from './DataList'
-import { NameInputs, MemoizedNameInputs } from './NameInputs'
+import DataList from '../components/DataList'
+import { NameInputs, MemoizedNameInputs } from '../components/NameInputs'
 
 const ExampleProps = () => {
   return (

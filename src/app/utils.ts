@@ -1,4 +1,4 @@
-import { Item } from '../server/reducer'
+import { Item } from './reducer'
 
 let instanceIndex = 0
 let instances = {} as Record<string, number>

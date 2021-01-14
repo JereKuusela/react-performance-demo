@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { canAct } from '../app/utils'
+import { canAct } from './utils'
 
 export interface Item {
   index: number
@@ -7,12 +7,12 @@ export interface Item {
   last: string
 }
 
-interface DataState {
+interface State {
   names: Item[][]
   clicks: number
 }
 
-const initialState: DataState = {
+const initialState: State = {
   names: Array(50)
     .fill(null)
     .map(() => [
@@ -68,27 +68,13 @@ export const slice = createSlice({
 
 const unboxParameters = <T extends unknown[]>(callback: (args: T) => void) => (...args: T) => callback(args)
 
-const withDelay = <T>(callback: (args: T) => void) => (arg: T) => (dispatch: any) => {
-  setTimeout(() => {
-    dispatch(callback(arg))
-  }, 1000)
-}
-
-const withDelayAndUnbox = <T extends unknown[]>(callback: (args: T) => void) => unboxParameters(withDelay(callback))
-
 export const set = unboxParameters(slice.actions.set)
 export const setFirstName = unboxParameters(slice.actions.setFirstName)
 export const setLastName = unboxParameters(slice.actions.setLastName)
 export const add = unboxParameters(slice.actions.add)
-export const remove = unboxParameters(slice.actions.removeWithLogic)
+export const remove = unboxParameters(slice.actions.remove)
 export const addWithLogic = unboxParameters(slice.actions.addWithLogic)
 export const removeWithLogic = unboxParameters(slice.actions.removeWithLogic)
-
-export const setWithDelay = withDelayAndUnbox(slice.actions.set)
-export const setFirstNameWithDelay = withDelayAndUnbox(slice.actions.setFirstName)
-export const setLastNameWithDelay = withDelayAndUnbox(slice.actions.setLastName)
-export const addWithDelay = withDelayAndUnbox(slice.actions.add)
-export const removeWithDelay = withDelayAndUnbox(slice.actions.remove)
 export const addClick = slice.actions.addClick
 
 export default slice.reducer

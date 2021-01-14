@@ -1,10 +1,10 @@
 import { useMemo } from 'react'
 import { useSelector, shallowEqual } from 'react-redux'
 import { createSelector } from 'reselect'
-import { RootState } from '../app/store'
-import { canAct } from '../app/utils'
+import { RootState } from './store'
+import { canAct } from './utils'
 
-const getAllData = (state: RootState) => state.server.names
+const getAllData = (state: RootState) => state.names
 const getData = (state: RootState, instance: number) => getAllData(state)[instance]
 const getName = (state: RootState, instance: number, index: number) => getData(state, instance)[index]
 
@@ -66,6 +66,6 @@ export const useNameDeepArrayWithCustomReselect = (instance: number, index: numb
   return useSelector((state: RootState) => selector(state, [instance, index]))
 }
 
-export const useClicks = () => useSelector((state: RootState) => state.server.clicks)
+export const useClicks = () => useSelector((state: RootState) => state.clicks)
 
-export const useCanAct = () => useSelector((state: RootState) => canAct(state.server.clicks))
+export const useCanAct = () => useSelector((state: RootState) => canAct(state.clicks))

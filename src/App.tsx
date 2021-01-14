@@ -2,12 +2,11 @@ import React from 'react'
 import { Container, Tab } from 'semantic-ui-react'
 import './App.css'
 import 'semantic-ui-css/semantic.min.css'
-import ExampleProps from './client/ExampleProps'
-import ExampleUpdating from './client/ExampleUpdating'
-import ExampleUseSelector from './client/ExampleUseSelector'
-import ExampleUseSelectorMemo from './client/ExampleUseSelectorMemo'
-import ExampleHooks from './client/ExampleHooks'
-import ExampleUseState from './client/ExampleUseState'
+import ExampleProps from './pages/ExampleProps'
+import ExampleUseSelector from './pages/ExampleUseSelector'
+import ExampleUseSelectorMemo from './pages/ExampleUseSelectorMemo'
+import ExampleHooks from './pages/ExampleHooks'
+import ExampleUseState from './pages/ExampleUseState'
 
 function App() {
   const panes = [
@@ -51,36 +50,33 @@ function App() {
         </Tab.Pane>
       ),
     },
-    {
-      menuItem: 'Update item',
-
-      render: () => (
-        <Tab.Pane>
-          <ExampleUpdating />
-        </Tab.Pane>
-      ),
-    },
   ]
 
   return (
     <Container>
       <Tab panes={panes} />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
-      <br />
+      <Brrrrrrrrrrrrrr />
     </Container>
   )
 }
+
+const Brrrrrrrrrrrrrr = () => (
+  <>
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+    <br />
+  </>
+)
 
 export default App

@@ -8,9 +8,9 @@ import {
   useNameDeepArrayWithMemo,
   useNameDeepArrayWithReselect,
   useNameDeepArrayWithCustomReselect,
-} from './selectors'
-import DataList from './DataList'
-import { NameInputsFromAttribute } from './NameInputs'
+} from '../app/selectors'
+import DataList from '../components/DataList'
+import { NameInputsFromAttribute } from '../components/NameInputs'
 
 const ExampleUseSelectorMemo = () => {
   return (
@@ -21,7 +21,7 @@ const ExampleUseSelectorMemo = () => {
       </Header>
       <DataList
         name='ExampleUseSelectorMemo_Array'
-        header='By default, this renders botj rows because the reference always changes.'
+        header='By default, this renders both rows because the reference always changes.'
         Component={RenderItem}
         componentProps={{ selector: useNameArray }}
       />

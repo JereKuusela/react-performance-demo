@@ -1,7 +1,7 @@
 import React, { FC } from 'react'
 import { Divider, Header, List } from 'semantic-ui-react'
 import { getInstanceNumber, ItemProps } from '../app/utils'
-import { useData } from './selectors'
+import { useData } from '../app/selectors'
 
 interface Props<C> {
   name: string

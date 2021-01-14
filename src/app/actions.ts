@@ -1,8 +1,36 @@
-import { useState, useCallback, useRef } from 'react'
+import { useCallback, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { getInstanceNumber, canAct } from '../app/utils'
-import { add, remove, addClick, addWithLogic, removeWithLogic } from '../server/reducer'
+import { add, addClick, addWithLogic, remove, removeWithLogic, setFirstName, setLastName } from './reducer'
 import { useClicks, useCanAct } from './selectors'
+import { getInstanceNumber, canAct } from './utils'
+
+export const useUpdate = (instance: number, index: number) => {
+  const dispatch = useDispatch()
+  const handleFirstChange = useCallback(
+    (first: string) => {
+      dispatch(setFirstName(instance, index, first))
+    },
+    [dispatch, instance, index]
+  )
+  const handleLastChange = useCallback(
+    (last: string) => {
+      dispatch(setLastName(instance, index, last))
+    },
+    [dispatch, instance, index]
+  )
+  return { handleFirstChange, handleLastChange }
+}
+
+export const useUpdateWithoutUseCallback = (instance: number, index: number) => {
+  const dispatch = useDispatch()
+  const handleFirstChange = (first: string) => {
+    dispatch(setFirstName(instance, index, first))
+  }
+  const handleLastChange = (last: string) => {
+    dispatch(setLastName(instance, index, last))
+  }
+  return { handleFirstChange, handleLastChange }
+}
 
 export const useButtonHandlersWithState = (name: string) => {
   const instance = getInstanceNumber(name)

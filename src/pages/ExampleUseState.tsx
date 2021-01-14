@@ -1,7 +1,8 @@
 import React from 'react'
 import { Divider, Header } from 'semantic-ui-react'
-import DataList from './DataList'
+import DataList from '../components/DataList'
 import TrackingButton from '../components/TrackingButton'
+import { NameInputs } from '../components/NameInputs'
 import {
   useButtonHandlersWithState,
   useButtonHandlersWithRef,
@@ -9,8 +10,7 @@ import {
   useButtonHandlersWithRedux,
   useButtonHandlersWithImprovedRedux,
   useButtonHandlersWithFixedRedux,
-} from './buttonActions'
-import { NameInputs } from './NameInputs'
+} from '../app/actions'
 
 const ExampleUseState = () => {
   return (
@@ -19,11 +19,6 @@ const ExampleUseState = () => {
         In the following example, add and remove buttons only work every 3th click. <u>No memoization</u> is used.
       </Header>
       <UseState />
-      <ItemList
-        name='ExampleuseState_UseStateRefactored'
-        header='The button logic can be refactored to own component. Then every click only renders the buttons'
-        useHook={useButtonHandlersWithState}
-      />
       <ItemList
         name='ExampleUseState_UseRef'
         header='With useRef, clicks no longer cause a render.'
