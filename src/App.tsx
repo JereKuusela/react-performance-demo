@@ -4,9 +4,10 @@ import './App.css'
 import 'semantic-ui-css/semantic.min.css'
 import ExampleProps from './pages/ExampleProps'
 import ExampleUseSelector from './pages/ExampleUseSelector'
-import ExampleUseSelectorMemo from './pages/ExampleUseSelectorMemo'
-import ExampleHooks from './pages/ExampleHooks'
+import ExampleReselect from './pages/ExampleReselect'
+import ExampleUseMemo from './pages/ExampleUseMemo'
 import ExampleUseState from './pages/ExampleUseState'
+import ExampleUseCallback from './pages/ExampleUseCallback'
 
 function App() {
   const panes = [
@@ -19,10 +20,10 @@ function App() {
       ),
     },
     {
-      menuItem: 'useCallback & useMemo',
+      menuItem: 'useCallback',
       render: () => (
         <Tab.Pane>
-          <ExampleHooks />
+          <ExampleUseCallback />
         </Tab.Pane>
       ),
     },
@@ -43,10 +44,18 @@ function App() {
       ),
     },
     {
-      menuItem: 'useSelector memo',
+      menuItem: 'useMemo',
       render: () => (
         <Tab.Pane>
-          <ExampleUseSelectorMemo />
+          <ExampleUseMemo />
+        </Tab.Pane>
+      ),
+    },
+    {
+      menuItem: 'reselect',
+      render: () => (
+        <Tab.Pane>
+          <ExampleReselect />
         </Tab.Pane>
       ),
     },

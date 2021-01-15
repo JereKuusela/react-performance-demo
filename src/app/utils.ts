@@ -1,7 +1,7 @@
 import { Item } from './reducer'
 
 let instanceIndex = 0
-let instances = {} as Record<string, number>
+const instances = {} as Record<string, number>
 
 export const getInstanceNumber = (name: string) => {
   if (!instances[name]) instances[name] = instanceIndex++
@@ -19,3 +19,10 @@ export type ItemProps = {
   useHook?: UpdateHook
 }
 export const canAct = (value: number) => value % 3 === 0
+
+const counter = {} as Record<number, number>
+
+export const doExpensiveCalculation = (instance: number) => {
+  if (!counter[instance]) counter[instance] = 0
+  return ++counter[instance]
+}

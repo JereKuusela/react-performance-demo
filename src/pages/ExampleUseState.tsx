@@ -20,6 +20,11 @@ const ExampleUseState = () => {
       </Header>
       <UseState />
       <ItemList
+        name='ExampleUseState_UseStateRefactored'
+        header='The button logic can be refactored to own component. Then every click only renders the buttons'
+        useHook={useButtonHandlersWithState}
+      />
+      <ItemList
         name='ExampleUseState_UseRef'
         header='With useRef, clicks no longer cause a render.'
         useHook={useButtonHandlersWithRef}
@@ -55,7 +60,11 @@ const UseState = () => {
   const { handleAdd, handleRemove } = useButtonHandlersWithState(name)
   return (
     <>
-      <DataList name={name} header='With useState, every click renders everything.' Component={NameInputs} />
+      <DataList
+        name={name}
+        header='useState forces a render when the value changes. Setting the state on the parent component will render everything.'
+        Component={NameInputs}
+      />
       <TrackingButton onClick={handleAdd}>+</TrackingButton>
       <TrackingButton onClick={handleRemove}>-</TrackingButton>
     </>
