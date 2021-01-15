@@ -6,13 +6,15 @@ import { TrackingInput } from '../components/TrackingInput'
 import DataList from '../components/DataList'
 import { NameInputs, MemoizedNameInputs } from '../components/NameInputs'
 
+const component = 'ExampleProps_'
+
 const ExampleProps = () => {
   return (
     <>
       <Header>Components render when parent renders. This can be prevented with memo.</Header>
-      <DataList name='ExampleProps_Attribute' header='Everything renders on change.' Component={NameInputs} />
+      <DataList name={`${component}NameInputs`} header='Everything renders on change.' Component={NameInputs} />
       <DataList
-        name='ExampleProps_MemoizedAttribute'
+        name={`${component}MemoizedNameInputs`}
         header='With memo, only the changed input renders.'
         Component={MemoizedNameInputs}
       />
@@ -21,7 +23,7 @@ const ExampleProps = () => {
         Components also render when props change. This is important when using references (objects, arrays, functions).
       </Header>
       <DataList
-        name='ExampleProps_MemoizedItem'
+        name={`${component}WithMemoizedItem`}
         header='When props are delivered as an object, the whole row renders.'
         Component={WithMemoizedItem}
       />

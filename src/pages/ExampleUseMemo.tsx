@@ -61,7 +61,7 @@ const ExampleUseMemo = () => {
         Component={FromReduxShallow}
       />
       <DataList
-        name={`${component}FromReduxShallow`}
+        name={`${component}FromReduxShallowWithoutMemo`}
         header='useSelector has a bit surpising feature that the memoization is forgotten when the parent causes the render.'
         Component={FromReduxShallowWithoutMemo}
       />

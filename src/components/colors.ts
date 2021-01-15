@@ -14,6 +14,6 @@ export const getColor = (previous: string) => {
     case yellow:
       return red
     default:
-      return white
+      return red
   }
 }

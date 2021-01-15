@@ -3,7 +3,7 @@ import { Button } from 'semantic-ui-react'
 import { getColor } from './colors'
 
 const TrackingButton = ({ children, onClick }: PropsWithChildren<{ onClick: () => void }>) => {
-  const ref = useRef('white')
+  const ref = useRef('')
   useEffect(() => {
     ref.current = getColor(ref.current)
   })
