@@ -1,3 +1,4 @@
+// Inputs to show a full name.
 import React, { memo } from 'react'
 import { TrackingInput } from './TrackingInput'
 

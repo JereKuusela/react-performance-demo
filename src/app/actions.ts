@@ -1,4 +1,4 @@
-import { useCallback, useRef, useState } from 'react'
+import { useCallback, useReducer, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
 import { add, addClick, addWithLogic, remove, removeWithLogic, setFirstName, setLastName } from './reducer'
 import { useClicks, useCanAct } from './selectors'
@@ -34,8 +34,14 @@ export const useUpdateWithoutUseCallback = (instance: number, index: number) => 
 
 export const useButtonHandlersWithState = (name: string) => {
   const instance = getInstanceNumber(name)
+  // The value of the state is not directly used at all.
   const [, setClicks] = useState(1)
   const dispatch = useDispatch()
+  // Using the update function means the click value is not needed on the dependency array.
+  // This keeps references of handlers the same so all renders are caused by useState.
+  // Note: This is not recommended way to write code. Update functions should have no side effects.
+  // On real code, using this kind of trick is pointless because useState causes renders anyways.
+  // On development mode, React will call update functions twice to show these kind of mistakes.
   const handleAdd = useCallback(() => {
     setClicks((prev) => {
       if (canAct(prev)) dispatch(add(instance))
@@ -51,6 +57,38 @@ export const useButtonHandlersWithState = (name: string) => {
   return { handleAdd, handleRemove }
 }
 
+const reducer = (state: { dispatch: any; clicks: number; instance: number }, type: string) => {
+  const { dispatch, instance, clicks } = state
+  switch (type) {
+    case 'add':
+      // Doing the update logic here means that click handlers have no dependencies.
+      // This keeps references of handlers the same so all renders are caused by useReducer.
+      // Note: This is not recommended way to write code. Reducer functions should have no side effects.
+      // On real code, using this kind of trick is pointless because useReducer causes renders anyways.
+      // On development mode, React will call reducer functions twice to show these kind of mistakes.
+      if (canAct(clicks)) setTimeout(() => dispatch(add(instance)), 50)
+      return { ...state, clicks: clicks + 1 }
+    case 'remove':
+      if (canAct(clicks)) dispatch(remove(instance))
+      return { ...state, clicks: clicks + 1 }
+    default:
+      throw new Error()
+  }
+}
+
+export const useButtonHandlersWithReducer = (name: string) => {
+  const instance = getInstanceNumber(name)
+  const dispatch = useDispatch()
+  const [, reducerDispatch] = useReducer(reducer, { dispatch, instance, clicks: 1 })
+  const handleAdd = useCallback(() => {
+    reducerDispatch('add')
+  }, [])
+  const handleRemove = useCallback(() => {
+    reducerDispatch('remove')
+  }, [])
+  return { handleAdd, handleRemove }
+}
+
 export const useButtonHandlersWithRef = (name: string) => {
   const instance = getInstanceNumber(name)
   const clicks = useRef(1)
@@ -63,6 +101,22 @@ export const useButtonHandlersWithRef = (name: string) => {
     if (canAct(clicks.current)) dispatch(remove(instance))
     clicks.current++
   }, [dispatch, instance])
+  return { handleAdd, handleRemove }
+}
+
+export const useButtonHandlersWithRefLikeState = (name: string) => {
+  const instance = getInstanceNumber(name)
+  // Value can only be mutated because the update function is not used.
+  const [value] = useState({ current: 1 })
+  const dispatch = useDispatch()
+  const handleAdd = useCallback(() => {
+    if (canAct(value.current)) dispatch(add(instance))
+    value.current++
+  }, [dispatch, instance, value])
+  const handleRemove = useCallback(() => {
+    if (canAct(value.current)) dispatch(remove(instance))
+    value.current++
+  }, [dispatch, instance, value])
   return { handleAdd, handleRemove }
 }
 

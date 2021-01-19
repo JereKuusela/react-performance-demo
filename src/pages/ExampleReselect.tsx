@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import { Header } from 'semantic-ui-react'
 import {
   useFullNameCounter,
@@ -37,7 +37,7 @@ const ExampleReselect = () => {
   )
 }
 
-const FromRedux = ({ item, instance }: ItemProps) => {
+const FromRedux = memo(({ item, instance }: ItemProps) => {
   const { index } = item
   const name = useFullNameCounter(instance, index)
   return (
@@ -45,8 +45,9 @@ const FromRedux = ({ item, instance }: ItemProps) => {
       <FullNameString name={name} />
     </MemoizedNameInputs>
   )
-}
-const FromReselect = ({ item, instance }: ItemProps) => {
+})
+
+const FromReselect = memo(({ item, instance }: ItemProps) => {
   const { index } = item
   const name = useFullNameCounterWithReselect(instance, index)
   return (
@@ -54,8 +55,9 @@ const FromReselect = ({ item, instance }: ItemProps) => {
       <FullNameString name={name} />
     </MemoizedNameInputs>
   )
-}
-const FromFixedReselect = ({ item, instance }: ItemProps) => {
+})
+
+const FromFixedReselect = memo(({ item, instance }: ItemProps) => {
   const { index } = item
   const name = useFullNameCounterWithFixedReselect(instance, index)
   return (
@@ -63,5 +65,6 @@ const FromFixedReselect = ({ item, instance }: ItemProps) => {
       <FullNameString name={name} />
     </MemoizedNameInputs>
   )
-}
+})
+
 export default ExampleReselect

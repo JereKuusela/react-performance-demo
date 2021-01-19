@@ -7,6 +7,9 @@ interface Props {
   style?: CSSProperties
 }
 
+/**
+ * A wrapper for input to only update the value when pressing enter or when losing focus.
+ */
 const Input = ({ value, onChange, style }: Props) => {
   const [currentValue, setCurrentValue] = useState(value)
 

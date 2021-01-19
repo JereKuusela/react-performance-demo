@@ -1,11 +1,14 @@
 import React, { useRef, useEffect, memo } from 'react'
-import { getColor } from './colors'
+import { getNextColor } from '../app/utils'
 import Input from './Input'
 
+/**
+ * A text input that tracks rendering with background color.
+ */
 export const TrackingInput = ({ value, onChange }: { value: string; onChange?: (value: string) => void }) => {
   const ref = useRef('')
   useEffect(() => {
-    ref.current = getColor(ref.current)
+    ref.current = getNextColor(ref.current)
   })
   return (
     <Input

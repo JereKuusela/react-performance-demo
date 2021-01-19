@@ -1,6 +1,7 @@
+// Selector hooks with reselect to return data from Redux.
 import { createSelector } from '@reduxjs/toolkit'
 import { useMemo } from 'react'
-import { shallowEqual, useSelector } from 'react-redux'
+import { useSelector } from 'react-redux'
 import { RootState } from './store'
 import { doExpensiveCalculation } from './utils'
 
@@ -22,7 +23,7 @@ export const useFullNameCounter = (instance: number, index: number) => {
   return useSelector((state: RootState) => {
     const { first, last } = getName(state, instance, index)
     return `${first} ${last} ${doExpensiveCalculation(instance)}`
-  }, shallowEqual)
+  })
 }
 
 export const useFullNameCounterWithReselect = (instance: number, index: number) =>

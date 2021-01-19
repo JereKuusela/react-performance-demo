@@ -1,11 +1,5 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit'
-import { canAct } from './utils'
-
-export interface Item {
-  index: number
-  first: string
-  last: string
-}
+import { canAct, Item } from './utils'
 
 interface State {
   names: Item[][]
@@ -18,12 +12,14 @@ const initialState: State = {
     .map(() => [
       { index: 0, first: 'John', last: 'Doe' },
       { index: 1, first: 'Jane', last: 'Doe' },
+      { index: 2, first: 'Jay', last: 'Doe' },
+      { index: 3, first: 'Jean', last: 'Doe' },
     ]),
   clicks: 1,
 }
 
 export const slice = createSlice({
-  name: 'counter',
+  name: 'name',
   initialState,
   reducers: {
     set: (state, { payload }: PayloadAction<[number, Item]>) => {

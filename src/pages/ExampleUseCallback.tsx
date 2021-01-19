@@ -12,17 +12,17 @@ const ExampleUseCallback = () => {
         components.
       </Header>
       <DataList
+        name='ExampleHooks_MemoizedNameInputs'
+        header='With useCallback, only the changed input renders.'
+        Component={MemoizedNameInputs}
+      />
+      <DataList
         name='ExampleHooks_WithoutUseCallback'
         header='Without useCallback, everything renders on change.'
         Component={MemoizedNameInputs}
         componentProps={{
           useHook: useUpdateWithoutUseCallback,
         }}
-      />
-      <DataList
-        name='ExampleHooks_MemoizedNameInputs'
-        header='With useCallback, only the changed input renders.'
-        Component={MemoizedNameInputs}
       />
       <DataList
         name='ExampleHooks_NameInputs'

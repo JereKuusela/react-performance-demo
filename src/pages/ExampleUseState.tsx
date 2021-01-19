@@ -2,7 +2,7 @@ import React from 'react'
 import { Divider, Header } from 'semantic-ui-react'
 import DataList from '../components/DataList'
 import TrackingButton from '../components/TrackingButton'
-import { NameInputs } from '../components/NameInputs'
+import { MemoizedNameInputs } from '../components/NameInputs'
 import {
   useButtonHandlersWithState,
   useButtonHandlersWithRef,
@@ -10,7 +10,11 @@ import {
   useButtonHandlersWithRedux,
   useButtonHandlersWithImprovedRedux,
   useButtonHandlersWithFixedRedux,
+  useButtonHandlersWithRefLikeState,
+  useButtonHandlersWithReducer,
 } from '../app/actions'
+
+const component = 'ExampleUseState_'
 
 const ExampleUseState = () => {
   return (
@@ -18,55 +22,48 @@ const ExampleUseState = () => {
       <Header>
         In the following example, add and remove buttons only work every 3th click. <u>No memoization</u> is used.
       </Header>
-      <UseState />
       <ItemList
-        name='ExampleUseState_UseStateRefactored'
-        header='The button logic can be refactored to own component. Then every click only renders the buttons'
+        name={`${component}useButtonHandlersWithState`}
+        header='useState forces a render when the value changes so every click will render both buttons.'
         useHook={useButtonHandlersWithState}
       />
       <ItemList
-        name='ExampleUseState_UseRef'
+        name={`${component}useButtonHandlersWithReducer`}
+        header='With useReducer, clicks no longer cause a render.'
+        useHook={useButtonHandlersWithReducer}
+      />
+      <ItemList
+        name={`${component}useButtonHandlersWithRef`}
         header='With useRef, clicks no longer cause a render.'
         useHook={useButtonHandlersWithRef}
       />
       <ItemList
-        name='ExampleUseState_Global'
+        name={`${component}useButtonHandlersWithRefLikeState`}
+        header='useState can only also be used like useRef.'
+        useHook={useButtonHandlersWithRefLikeState}
+      />
+      <ItemList
+        name={`${component}useButtonHandlersWithGlobal`}
         header='The variable can also be stored as a global variable.'
         useHook={useButtonHandlersWithGlobal}
       />
       <Divider />
       <Header>The variable can also be stored on Redux but requires a proper implementation.</Header>
       <ItemList
-        name='ExampleUseState_Redux'
+        name={`${component}useButtonHandlersWithRedux`}
         header='A naive implementation will cause a render every click.'
         useHook={useButtonHandlersWithRedux}
       />
       <ItemList
-        name='ExampleUseState_ImprovedRedux'
-        header='With improved logic, the render only happens when the action changes.'
+        name={`${component}useButtonHandlersWithImprovedRedux`}
+        header='With improved logic, the render happens when the action changes.'
         useHook={useButtonHandlersWithImprovedRedux}
       />
       <ItemList
-        name='ExampleUseState_FixedRedux'
+        name={`${component}useButtonHandlersWithFixedRedux`}
         header='With the whole logic in Redux, clicks no longer cause a render.'
         useHook={useButtonHandlersWithFixedRedux}
       />
-    </>
-  )
-}
-
-const UseState = () => {
-  const name = 'ExampleUseState_UseState'
-  const { handleAdd, handleRemove } = useButtonHandlersWithState(name)
-  return (
-    <>
-      <DataList
-        name={name}
-        header='useState forces a render when the value changes. Setting the state on the parent component will render everything.'
-        Component={NameInputs}
-      />
-      <TrackingButton onClick={handleAdd}>+</TrackingButton>
-      <TrackingButton onClick={handleRemove}>-</TrackingButton>
     </>
   )
 }
@@ -77,7 +74,7 @@ interface Props extends ButtonProps {
 
 const ItemList = ({ header, name, useHook }: Props) => (
   <>
-    <DataList name={name} header={header} Component={NameInputs} />
+    <DataList name={name} header={header} Component={MemoizedNameInputs} />
     <Buttons name={name} useHook={useHook} />
   </>
 )

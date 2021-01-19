@@ -1,6 +1,5 @@
 import React from 'react'
 import { Container, Tab } from 'semantic-ui-react'
-import './App.css'
 import 'semantic-ui-css/semantic.min.css'
 import ExampleProps from './pages/ExampleProps'
 import ExampleUseSelector from './pages/ExampleUseSelector'

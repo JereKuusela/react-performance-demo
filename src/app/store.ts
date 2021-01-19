@@ -3,6 +3,7 @@ import reducer from './reducer'
 
 export const store = configureStore({
   reducer,
+  devTools: { trace: true, traceLimit: 20 },
 })
 
 export type RootState = ReturnType<typeof store.getState>

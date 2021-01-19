@@ -39,11 +39,6 @@ const ExampleUseMemo = () => {
         Component={FromString}
       />
       <DataList
-        name={`${component}FromStringWithUseMemo`}
-        header='The behavior is exactly same with useMemo.'
-        Component={FromStringWithUseMemo}
-      />
-      <DataList
         name={`${component}FromStringWithouMemoization`}
         header="Without memoization, useMemo is still pointless because it doesn't prevent renders."
         Component={FromStringWithoutMemoization}
@@ -100,16 +95,6 @@ const FromString = ({ item, instance }: ItemProps) => {
   return (
     <MemoizedNameInputs item={item} instance={instance}>
       <MemoizedFullNameString name={`${first} ${last}`} />
-    </MemoizedNameInputs>
-  )
-}
-
-const FromStringWithUseMemo = ({ item, instance }: ItemProps) => {
-  const { first, last } = item
-  const name = useMemo(() => `${first} ${last}`, [first, last])
-  return (
-    <MemoizedNameInputs item={item} instance={instance}>
-      <MemoizedFullNameString name={name} />
     </MemoizedNameInputs>
   )
 }

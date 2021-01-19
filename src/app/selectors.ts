@@ -1,3 +1,4 @@
+// Selector hooks to return data from Redux.
 import { useSelector, shallowEqual } from 'react-redux'
 import { RootState } from './store'
 import { canAct } from './utils'

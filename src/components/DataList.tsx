@@ -10,6 +10,10 @@ interface Props<C> {
   componentProps?: C
 }
 
+/**
+ * Renders items of an instance with a given component.
+ * This is used by all of the examples.
+ */
 const DataList = <C extends unknown>({ header, name, Component, componentProps }: Props<C>) => {
   const instance = getInstanceNumber(name)
   const data = useData(instance)
