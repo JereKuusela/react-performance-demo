@@ -3,7 +3,8 @@ import { canAct, Item } from './utils'
 
 interface State {
   names: Item[][]
-  clicks: number
+  clicks: number[]
+  click: number
 }
 
 const initialState: State = {
@@ -15,7 +16,8 @@ const initialState: State = {
       { index: 2, first: 'Jay', last: 'Doe' },
       { index: 3, first: 'Jean', last: 'Doe' },
     ]),
-  clicks: 1,
+  clicks: Array(50).fill(0),
+  click: 1,
 }
 
 export const slice = createSlice({
@@ -43,21 +45,25 @@ export const slice = createSlice({
       state.names[instance].pop()
     },
     addWithLogic: (state, { payload }: PayloadAction<[number]>) => {
-      if (canAct(state.clicks)) {
+      if (canAct(state.click)) {
         const [instance] = payload
         state.names[instance].push({ index: state.names[instance].length, first: '', last: '' })
       }
-      state.clicks++
+      state.click++
     },
     removeWithLogic: (state, { payload }: PayloadAction<[number]>) => {
-      if (canAct(state.clicks)) {
+      if (canAct(state.click)) {
         const [instance] = payload
         state.names[instance].pop()
       }
-      state.clicks++
+      state.click++
     },
     addClick: (state) => {
-      state.clicks++
+      state.click++
+    },
+    addClicks: (state, { payload }: PayloadAction<[number, number]>) => {
+      const [instance, clicks] = payload
+      state.clicks[instance] += clicks
     },
   },
 })
@@ -71,6 +77,7 @@ export const add = unboxParameters(slice.actions.add)
 export const remove = unboxParameters(slice.actions.remove)
 export const addWithLogic = unboxParameters(slice.actions.addWithLogic)
 export const removeWithLogic = unboxParameters(slice.actions.removeWithLogic)
+export const addClicks = unboxParameters(slice.actions.addClicks)
 export const addClick = slice.actions.addClick
 
 export default slice.reducer

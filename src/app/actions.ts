@@ -1,7 +1,7 @@
-import { useCallback, useReducer, useRef, useState } from 'react'
+import { useCallback, useEffect, useReducer, useRef, useState } from 'react'
 import { useDispatch } from 'react-redux'
-import { add, addClick, addWithLogic, remove, removeWithLogic, setFirstName, setLastName } from './reducer'
-import { useClicks, useCanAct } from './selectors'
+import { add, addClick, addClicks, addWithLogic, remove, removeWithLogic, setFirstName, setLastName } from './reducer'
+import { useCanAct, useClick } from './selectors'
 import { getInstanceNumber, canAct } from './utils'
 
 export const useUpdate = (instance: number, index: number) => {
@@ -32,7 +32,29 @@ export const useUpdateWithoutUseCallback = (instance: number, index: number) => 
   return { handleFirstChange, handleLastChange }
 }
 
+// Button handlers where the amount of click is stored in local state. On every click:
+// 1. State updates which forces a render. Children require memo() to prevent rendering.
+// 2. Handlers get a new reference. This makes children render even with memo().
 export const useButtonHandlersWithState = (name: string) => {
+  const instance = getInstanceNumber(name)
+  // The value of the state is not directly used at all.
+  const [clicks, setClicks] = useState(1)
+  const dispatch = useDispatch()
+  const handleAdd = useCallback(() => {
+    setClicks((prev) => prev + 1)
+    if (canAct(clicks)) dispatch(add(instance))
+  }, [dispatch, instance, clicks])
+  const handleRemove = useCallback(() => {
+    setClicks((prev) => prev + 1)
+    if (canAct(clicks)) dispatch(remove(instance))
+  }, [dispatch, instance, clicks])
+  return { handleAdd, handleRemove }
+}
+
+// Button handlers where the amount of click is stored in local state. On every click:
+// 1. State updates which forces a render. Children require memo() to prevent rendering.
+// 2. Handlers have a stable reference (but bad coding style).
+export const useButtonHandlersWithStateStable = (name: string) => {
   const instance = getInstanceNumber(name)
   // The value of the state is not directly used at all.
   const [, setClicks] = useState(1)
@@ -66,7 +88,7 @@ const reducer = (state: { dispatch: any; clicks: number; instance: number }, typ
       // Note: This is not recommended way to write code. Reducer functions should have no side effects.
       // On real code, using this kind of trick is pointless because useReducer causes renders anyways.
       // On development mode, React will call reducer functions twice to show these kind of mistakes.
-      if (canAct(clicks)) setTimeout(() => dispatch(add(instance)), 50)
+      if (canAct(clicks)) dispatch(add(instance))
       return { ...state, clicks: clicks + 1 }
     case 'remove':
       if (canAct(clicks)) dispatch(remove(instance))
@@ -76,6 +98,9 @@ const reducer = (state: { dispatch: any; clicks: number; instance: number }, typ
   }
 }
 
+// Button handlers where the amount of click is stored in local reducer state. On every click:
+// 1. Reducer state updates which forces a render. Children require memo() to prevent rendering.
+// 2. Handlers have a stable reference (but bad coding style).
 export const useButtonHandlersWithReducer = (name: string) => {
   const instance = getInstanceNumber(name)
   const dispatch = useDispatch()
@@ -89,6 +114,9 @@ export const useButtonHandlersWithReducer = (name: string) => {
   return { handleAdd, handleRemove }
 }
 
+// Button handlers where the amount of click is stored in local mutable state. On every click:
+// 1. Mutable state changes which doesn't cause a render.
+// 2. Handlers have a stable reference.
 export const useButtonHandlersWithRef = (name: string) => {
   const instance = getInstanceNumber(name)
   const clicks = useRef(1)
@@ -104,6 +132,9 @@ export const useButtonHandlersWithRef = (name: string) => {
   return { handleAdd, handleRemove }
 }
 
+// Button handlers where the amount of click is stored in local mutable state. On every click:
+// 1. Mutable state changes which doesn't cause a render.
+// 2. Handlers have a stable reference.
 export const useButtonHandlersWithRefLikeState = (name: string) => {
   const instance = getInstanceNumber(name)
   // Value can only be mutated because the update function is not used.
@@ -122,6 +153,9 @@ export const useButtonHandlersWithRefLikeState = (name: string) => {
 
 let clicks = 1
 
+// Button handlers where the amount of click is stored in a global variable. On every click:
+// 1. Global variable changes which doesn't cause a render.
+// 2. Handlers have a stable reference.
 export const useButtonHandlersWithGlobal = (name: string) => {
   const instance = getInstanceNumber(name)
   const dispatch = useDispatch()
@@ -136,9 +170,12 @@ export const useButtonHandlersWithGlobal = (name: string) => {
   return { handleAdd, handleRemove }
 }
 
+// Button handlers where the amount of click is stored in Redux. On every click:
+// 1. Selector value changes which forces a render. Children require memo() to prevent rendering.
+// 2. Handlers get a new reference. This makes children render even with memo().
 export const useButtonHandlersWithRedux = (name: string) => {
   const instance = getInstanceNumber(name)
-  const clicks = useClicks()
+  const clicks = useClick()
   const dispatch = useDispatch()
   const handleAdd = useCallback(() => {
     if (canAct(clicks)) dispatch(add(instance))
@@ -151,6 +188,9 @@ export const useButtonHandlersWithRedux = (name: string) => {
   return { handleAdd, handleRemove }
 }
 
+// Button handlers where the amount of click is stored in Redux. On every click:
+// 1. Selector value may change. Children require memo() to prevent rendering.
+// 2. Handlers may get a new reference. This makes children render even with memo().
 export const useButtonHandlersWithImprovedRedux = (name: string) => {
   const instance = getInstanceNumber(name)
   const canAct = useCanAct()
@@ -166,6 +206,9 @@ export const useButtonHandlersWithImprovedRedux = (name: string) => {
   return { handleAdd, handleRemove }
 }
 
+// Button handlers where the amount of click is stored in Redux. On every click:
+// 1. Selector is not used.
+// 2. Handlers have a stable reference.
 export const useButtonHandlersWithFixedRedux = (name: string) => {
   const instance = getInstanceNumber(name)
   const dispatch = useDispatch()

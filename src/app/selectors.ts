@@ -10,6 +10,7 @@ const getFullName = (state: RootState, instance: number, index: number) => {
   const { first, last } = getName(state, instance, index)
   return { first, last }
 }
+export const useClicks = (instance: number) => useSelector((state: RootState) => state.clicks[instance])
 
 export const useAllData = () => useSelector(getAllData)
 
@@ -30,6 +31,6 @@ export const useFullName = (instance: number, index: number) =>
 export const useFullNameWithShallow = (instance: number, index: number) =>
   useSelector((state: RootState) => getFullName(state, instance, index), shallowEqual)
 
-export const useClicks = () => useSelector((state: RootState) => state.clicks)
+export const useClick = () => useSelector((state: RootState) => state.click)
 
-export const useCanAct = () => useSelector((state: RootState) => canAct(state.clicks))
+export const useCanAct = () => useSelector((state: RootState) => canAct(state.click))

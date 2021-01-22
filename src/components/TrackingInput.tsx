@@ -1,6 +1,6 @@
 import React, { useRef, useEffect, memo } from 'react'
 import { getNextColor } from '../app/utils'
-import Input from './Input'
+import { Input } from './Input'
 
 /**
  * A text input that tracks rendering with background color.
