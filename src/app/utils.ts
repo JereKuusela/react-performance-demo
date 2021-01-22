@@ -16,17 +16,10 @@ export interface Item {
   last: string
 }
 
-export type UpdateHook = (
-  instance: number,
-  index: number
-) => { handleFirstChange: (first: string) => void; handleLastChange: (first: string) => void }
-
 export type ItemProps = {
   item: Item
   instance: number
-  useHook?: UpdateHook
 }
-export const canAct = (value: number) => value % 3 === 0
 
 const counter = {} as Record<number, number>
 /**

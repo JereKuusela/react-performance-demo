@@ -1,7 +1,8 @@
 import React, { useCallback, useEffect, useReducer, useRef, useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { Divider, Header } from 'semantic-ui-react'
-import { addClicks } from '../app/reducer'
+import { addClicks, addClicksWithAdd, setAddClicks } from '../app/reducer'
+import { RootState } from '../app/store'
 import Counter, { CounterWithDispatch } from '../components/Counter'
 
 const component = 'ExampleUseCallback_'
@@ -51,6 +52,7 @@ const ExampleUseCallback = () => {
         hook={useWithCallbackRef}
         memoized
       />
+      <Counter name={`${component}useWithRedux`} header='State can be stored in Redux.' hook={useWithRedux} memoized />
       <CounterWithDispatch
         name={`${component}useWithReducer`}
         header='State can be replaced with a reducer. This removes the need of passing callbacks as props which means that dependencies no longer matter.'
@@ -136,7 +138,6 @@ const useWithCallbackRef = (instance: number) => {
 }
 
 const counterReducer = (state: { value: number; add: boolean }, action: { type: string; value: number }) => {
-  console.log(action)
   switch (action.type) {
     case 'set':
       return { ...state, value: action.value }
@@ -163,4 +164,20 @@ const useWithReducer = (instance: number) => {
   return { dispatch: reducerDispatch, clicks: state.value }
 }
 
+const useWithRedux = (instance: number) => {
+  const dispatch = useDispatch()
+  const setClicks = useCallback(
+    (value: number) => {
+      dispatch(setAddClicks(value))
+    },
+    [dispatch]
+  )
+  const clicks = useSelector((state: RootState) => state.addClicks)
+
+  const handleClick = useCallback(() => {
+    dispatch(addClicksWithAdd(instance))
+  }, [dispatch, instance])
+
+  return { clicks, setClicks, handleClick }
+}
 export default ExampleUseCallback

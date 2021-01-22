@@ -1,9 +1,8 @@
 import React, { memo } from 'react'
 import { Divider, Header, ItemProps, ListItem } from 'semantic-ui-react'
-import { useUpdate } from '../app/actions'
 import { TrackingInput } from '../components/TrackingInput'
 import DataList from '../components/DataList'
-import { NameInputs, MemoizedNameInputs } from '../components/NameInputs'
+import { NameInputs, MemoizedNameInputs, useUpdate } from '../components/NameInputs'
 import { Item } from '../app/utils'
 
 const component = 'ExampleProps_'

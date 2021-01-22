@@ -1,7 +1,6 @@
 // Selector hooks to return data from Redux.
 import { useSelector, shallowEqual } from 'react-redux'
 import { RootState } from './store'
-import { canAct } from './utils'
 
 const getAllData = (state: RootState) => state.names
 const getData = (state: RootState, instance: number) => getAllData(state)[instance]
@@ -30,7 +29,3 @@ export const useFullName = (instance: number, index: number) =>
 
 export const useFullNameWithShallow = (instance: number, index: number) =>
   useSelector((state: RootState) => getFullName(state, instance, index), shallowEqual)
-
-export const useClick = () => useSelector((state: RootState) => state.click)
-
-export const useCanAct = () => useSelector((state: RootState) => canAct(state.click))

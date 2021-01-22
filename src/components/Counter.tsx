@@ -1,4 +1,4 @@
-import React, { Dispatch, memo, SetStateAction, useContext } from 'react'
+import React, { Dispatch, memo, useContext } from 'react'
 import { Divider, Header } from 'semantic-ui-react'
 import { useClicks } from '../app/selectors'
 import { getInstanceNumber } from '../app/utils'
@@ -11,7 +11,7 @@ interface SharedProps {
 }
 
 interface Props extends SharedProps {
-  hook: (instance: number) => { clicks: number; setClicks: Dispatch<SetStateAction<number>>; handleClick: () => void }
+  hook: (instance: number) => { clicks: number; setClicks: (value: number) => void; handleClick: () => void }
   memoized?: boolean
 }
 
