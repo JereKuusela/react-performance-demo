@@ -71,7 +71,7 @@ const ExampleHandlers = () => {
       />
       <AdderWithDispatch
         name={`${component}useWithReducerNoProps`}
-        header='he state value is stored with useReducer. The dispatch is passed down in a context, replacing the handler.'
+        header='The state value is stored with useReducer. The dispatch is passed down in a context, replacing the handler.'
         hook={useWithReducerNoProps}
       />
     </>
