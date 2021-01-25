@@ -7,7 +7,7 @@ import { Item } from '../app/utils'
 
 const component = 'ExampleProps_'
 
-const ExampleProps = () => {
+const ExampleRendering = () => {
   return (
     <>
       <Header>Components render when parent renders. This can be prevented with memo.</Header>
@@ -50,4 +50,4 @@ const MemoizedRenderLastName = memo(({ item, onChange }: { item: Item; onChange:
   <TrackingInput value={item.last} onChange={onChange} />
 ))
 
-export default ExampleProps
+export default ExampleRendering
