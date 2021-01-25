@@ -1,57 +1,57 @@
 import React from 'react'
 import { Container, Tab } from 'semantic-ui-react'
 import 'semantic-ui-css/semantic.min.css'
-import ExampleProps from './pages/ExampleProps'
-import ExampleUseSelector from './pages/ExampleUseSelector'
+import ExampleRendering from './pages/ExampleRendering'
+import ExampleSelectors from './pages/ExampleSelectors'
 import ExampleReselect from './pages/ExampleReselect'
-import ExampleUseMemo from './pages/ExampleUseMemo'
-import ExampleUseState from './pages/ExampleUseState'
-import ExampleUseCallback from './pages/ExampleUseCallback'
+import ExampleValues from './pages/ExampleValues'
+import ExampleState from './pages/ExampleState'
+import ExampleHandlers from './pages/ExampleHandlers'
 
 function App() {
   const panes = [
     {
-      menuItem: 'props & memo',
+      menuItem: 'Rendering',
       render: () => (
         <Tab.Pane>
-          <ExampleProps />
+          <ExampleRendering />
         </Tab.Pane>
       ),
     },
     {
-      menuItem: 'useCallback',
+      menuItem: 'State',
       render: () => (
         <Tab.Pane>
-          <ExampleUseCallback />
+          <ExampleState />
         </Tab.Pane>
       ),
     },
     {
-      menuItem: 'useSelector',
+      menuItem: 'Selectors',
       render: () => (
         <Tab.Pane>
-          <ExampleUseSelector />
+          <ExampleSelectors />
         </Tab.Pane>
       ),
     },
     {
-      menuItem: 'useState & useRef',
+      menuItem: 'Handlers',
       render: () => (
         <Tab.Pane>
-          <ExampleUseState />
+          <ExampleHandlers />
         </Tab.Pane>
       ),
     },
     {
-      menuItem: 'useMemo',
+      menuItem: 'Values',
       render: () => (
         <Tab.Pane>
-          <ExampleUseMemo />
+          <ExampleValues />
         </Tab.Pane>
       ),
     },
     {
-      menuItem: 'reselect',
+      menuItem: 'Reselect',
       render: () => (
         <Tab.Pane>
           <ExampleReselect />

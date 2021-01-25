@@ -15,7 +15,7 @@ interface Props extends SharedProps {
   memoized?: boolean
 }
 
-const Counter = ({ hook, name, header, memoized }: Props) => {
+const Adder = ({ hook, name, header, memoized }: Props) => {
   const instance = getInstanceNumber(name)
   const { clicks, setClicks, handleClick } = hook(instance)
   const ButtonComponent = memoized ? MemoizedTrackingButton : TrackingButton
@@ -33,12 +33,12 @@ const Counter = ({ hook, name, header, memoized }: Props) => {
 
 type DispatchType = Dispatch<{ type: string; value: number }>
 
-const CounterDispatch = React.createContext((null as unknown) as DispatchType)
+const AdderDispatch = React.createContext((null as unknown) as DispatchType)
 
 interface DispatchProps extends SharedProps {
   hook: (instance: number) => { clicks: number; dispatch: DispatchType }
 }
-export const CounterWithDispatch = ({ header, name, hook }: DispatchProps) => {
+export const AdderWithDispatch = ({ header, name, hook }: DispatchProps) => {
   const instance = getInstanceNumber(name)
   const { clicks, dispatch } = hook(instance)
   const totalClicks = useClicks(instance)
@@ -46,10 +46,10 @@ export const CounterWithDispatch = ({ header, name, hook }: DispatchProps) => {
     <>
       <Divider />
       <Header size='small'>{header}</Header>
-      <CounterDispatch.Provider value={dispatch}>
+      <AdderDispatch.Provider value={dispatch}>
         <NumericInputWithDispatch value={clicks} />
-        <CounterButtonWithDispatch />
-      </CounterDispatch.Provider>
+        <AdderButtonWithDispatch />
+      </AdderDispatch.Provider>
 
       <NumericInput value={totalClicks} />
     </>
@@ -57,14 +57,14 @@ export const CounterWithDispatch = ({ header, name, hook }: DispatchProps) => {
 }
 
 const NumericInputWithDispatch = ({ value }: { value: number }) => {
-  const dispatch = useContext(CounterDispatch)
+  const dispatch = useContext(AdderDispatch)
   const handleChange = (value: number) => {
     dispatch({ type: 'set', value })
   }
   return <NumericInput value={value} onChange={handleChange} />
 }
-const CounterButtonWithDispatch = memo(() => {
-  const dispatch = useContext(CounterDispatch)
+const AdderButtonWithDispatch = memo(() => {
+  const dispatch = useContext(AdderDispatch)
   const handleClick = () => {
     dispatch({ type: 'add', value: 0 })
   }
@@ -72,4 +72,4 @@ const CounterButtonWithDispatch = memo(() => {
   return <TrackingButton onClick={handleClick}>Add</TrackingButton>
 })
 
-export default Counter
+export default Adder

@@ -13,9 +13,9 @@ import {
 import { useFullName, useFullNameWithShallow } from '../app/selectors'
 import { useFullNameWithReselect } from '../app/reselect'
 
-const component = 'ExampleUseMemo_'
+const component = 'ExampleValues_'
 
-const ExampleUseMemo = () => {
+const ExampleValues = () => {
   return (
     <>
       <Header>
@@ -145,4 +145,4 @@ const FromReselect = ({ item, instance }: ItemProps) => {
   )
 }
 
-export default ExampleUseMemo
+export default ExampleValues

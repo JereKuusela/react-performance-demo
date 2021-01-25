@@ -3,11 +3,11 @@ import { useDispatch, useSelector } from 'react-redux'
 import { Divider, Header } from 'semantic-ui-react'
 import { addClicks, addClicksWithAdd, setAddClicks } from '../app/reducer'
 import { RootState } from '../app/store'
-import Counter, { CounterWithDispatch } from '../components/Counter'
+import Adder, { AdderWithDispatch } from '../components/Adder'
 
-const component = 'ExampleUseCallback_'
+const component = 'ExampleHandlers_'
 
-const ExampleUseCallback = () => {
+const ExampleHandlers = () => {
   return (
     <>
       <Header>Following example has a button that sets value to a counter.</Header>
@@ -15,18 +15,18 @@ const ExampleUseCallback = () => {
         useCallback can be used to keep function references same. This prevents extra renders for <u>memoized</u>{' '}
         components.
       </Header>
-      <Counter
+      <Adder
         name={`${component}useWithoutUsecallback`}
         header='Without useCallback, changing the value and clicking the button invalidate the handler reference.'
         hook={useWithoutUsecallback}
         memoized
       />
-      <Counter
+      <Adder
         name={`${component}useWithUseCallback`}
         header='Without memoization of the component, useCallback has no effect.'
         hook={useWithUseCallback}
       />
-      <Counter
+      <Adder
         name={`${component}useWithUseCallback`}
         header='With memoization and useCallback, changing the value still invalidates the reference because of dependency.'
         hook={useWithUseCallback}
@@ -34,29 +34,45 @@ const ExampleUseCallback = () => {
       />
       <Divider />
       <Header>There are multiple ways to break this dependency.</Header>
-      <Counter
+      <Adder
         name={`${component}useWithUpdater`}
         header="The state updater function allows getting the state value without a dependency. However updater functions shouldn't have side effects so dispatching requires a bit more code."
         hook={useWithUpdater}
         memoized
       />
-      <Counter
+      <Adder
         name={`${component}useWithRef`}
         header="The state value can be copied to a mutable ref which doesn't require a dependency."
         hook={useWithRef}
         memoized
       />
-      <Counter
+      <Adder
         name={`${component}useWithCallbackRef`}
         header='Another way is to put the whole callback to a mutable ref.'
         hook={useWithCallbackRef}
         memoized
       />
-      <Counter name={`${component}useWithRedux`} header='State can be stored in Redux.' hook={useWithRedux} memoized />
-      <CounterWithDispatch
+      <Divider />
+      <Header>
+        Reducers allow separating the logic of setting and adding the value. This further removes the need of passing
+        the handler as a prop.
+      </Header>
+      <Adder
+        name={`${component}useWithRedux`}
+        header='The state value is stored in Redux.'
+        hook={useWithRedux}
+        memoized
+      />
+      <Adder
         name={`${component}useWithReducer`}
-        header='State can be replaced with a reducer. This removes the need of passing callbacks as props which means that dependencies no longer matter.'
+        header='The state value is stored with useReducer.'
         hook={useWithReducer}
+        memoized
+      />
+      <AdderWithDispatch
+        name={`${component}useWithReducerNoProps`}
+        header='he state value is stored with useReducer. The dispatch is passed down in a context, replacing the handler.'
+        hook={useWithReducerNoProps}
       />
     </>
   )
@@ -137,33 +153,6 @@ const useWithCallbackRef = (instance: number) => {
   return { clicks, setClicks, handleClick }
 }
 
-const counterReducer = (state: { value: number; add: boolean }, action: { type: string; value: number }) => {
-  switch (action.type) {
-    case 'set':
-      return { ...state, value: action.value }
-    case 'add':
-      return { ...state, add: true }
-    case 'added':
-      return { ...state, add: false }
-    default:
-      throw new Error()
-  }
-}
-
-const useWithReducer = (instance: number) => {
-  const [state, reducerDispatch] = useReducer(counterReducer, { value: 0, add: false })
-  const dispatch = useDispatch()
-  // Reducer function shouldn't have side effects so Redux dispatch must be outside of it.
-  useEffect(() => {
-    if (state.add) {
-      dispatch(addClicks(instance, state.value))
-      reducerDispatch({ type: 'added', value: 0 })
-    }
-  }, [state.value, state.add, instance, dispatch])
-
-  return { dispatch: reducerDispatch, clicks: state.value }
-}
-
 const useWithRedux = (instance: number) => {
   const dispatch = useDispatch()
   const setClicks = useCallback(
@@ -180,4 +169,57 @@ const useWithRedux = (instance: number) => {
 
   return { clicks, setClicks, handleClick }
 }
-export default ExampleUseCallback
+
+const adderReducer = (state: { value: number; add: boolean }, action: { type: string; value: number }) => {
+  switch (action.type) {
+    case 'set':
+      return { ...state, value: action.value }
+    case 'add':
+      return { ...state, add: true }
+    case 'added':
+      return { ...state, add: false }
+    default:
+      throw new Error()
+  }
+}
+
+const useWithReducer = (instance: number) => {
+  const [state, reducerDispatch] = useReducer(adderReducer, { value: 0, add: false })
+  const dispatch = useDispatch()
+  // Reducer function shouldn't have side effects so Redux dispatch must be outside of it.
+  useEffect(() => {
+    if (state.add) {
+      dispatch(addClicks(instance, state.value))
+      reducerDispatch({ type: 'added', value: 0 })
+    }
+  }, [state.value, state.add, instance, dispatch])
+
+  const handleClick = useCallback(() => {
+    reducerDispatch({ type: 'add', value: 0 })
+  }, [reducerDispatch])
+
+  const setClicks = useCallback(
+    (value: number) => {
+      reducerDispatch({ type: 'set', value })
+    },
+    [reducerDispatch]
+  )
+
+  return { clicks: state.value, setClicks, handleClick }
+}
+
+const useWithReducerNoProps = (instance: number) => {
+  const [state, reducerDispatch] = useReducer(adderReducer, { value: 0, add: false })
+  const dispatch = useDispatch()
+  // Reducer function shouldn't have side effects so Redux dispatch must be outside of it.
+  useEffect(() => {
+    if (state.add) {
+      dispatch(addClicks(instance, state.value))
+      reducerDispatch({ type: 'added', value: 0 })
+    }
+  }, [state.value, state.add, instance, dispatch])
+
+  return { dispatch: reducerDispatch, clicks: state.value }
+}
+
+export default ExampleHandlers
