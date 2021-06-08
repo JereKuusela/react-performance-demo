@@ -70,8 +70,7 @@ const ExampleValues = () => {
 }
 
 const FromObject = ({ item, instance }: ItemProps) => {
-  const { first, last } = item
-  const name = { first, last }
+  const name = { ...item }
   return (
     <MemoizedNameInputs item={item} instance={instance}>
       <MemoizedFullNameObject name={name} />

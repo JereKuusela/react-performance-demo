@@ -67,6 +67,34 @@ const useWithState = () => {
 }
 
 /**
+ * Amount of clicks is stored in a mutable ref.
+ * Updates won't cause a render.
+ */
+const useWithRef = () => {
+  const click = useRef(0)
+
+  const handleClick = useCallback(() => {
+    click.current++
+  }, [])
+
+  return handleClick
+}
+
+/**
+ * Amount of clicks is stored in a local state. The value is mutated instead of updated.
+ * Updates won't cause a render.
+ */
+const useWithMutableState = () => {
+  const [state] = useState({ value: 0 })
+
+  const handleClick = useCallback(() => {
+    state.value++
+  }, [state])
+
+  return handleClick
+}
+
+/**
  * Amount of clicks is stored in Redux.
  * The value is not accessed so updates won't cause a render.
  */
@@ -91,34 +119,6 @@ const useWithRedux = () => {
   const handleClick = useCallback(() => {
     dispatch(addStateClick())
   }, [dispatch])
-
-  return handleClick
-}
-
-/**
- * Amount of clicks is stored in a mutable ref.
- * Updates won't cause a render.
- */
-const useWithRef = () => {
-  const click = useRef(0)
-
-  const handleClick = useCallback(() => {
-    click.current++
-  }, [])
-
-  return handleClick
-}
-
-/**
- * Amount of clicks is stored in a local state. The value is mutated instead of updated.
- * Updates won't cause a render.
- */
-const useWithMutableState = () => {
-  const [state] = useState({ value: 0 })
-
-  const handleClick = useCallback(() => {
-    state.value++
-  }, [state])
 
   return handleClick
 }
