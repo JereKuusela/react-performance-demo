@@ -55,7 +55,7 @@ export const slice = createSlice({
   },
 })
 
-const unboxParameters = <T extends unknown[]>(callback: (args: T) => void) => (...args: T) => callback(args)
+const unboxParameters = <T extends unknown[], R>(callback: (args: T) => R) => (...args: T) => callback(args)
 
 export const set = unboxParameters(slice.actions.set)
 export const setFirstName = unboxParameters(slice.actions.setFirstName)
