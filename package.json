@@ -2,7 +2,7 @@
   "name": "react-performance-demo",
   "version": "1.0.0",
   "private": true,
-  "homepage": "https://JereKuuselagithub.io/react-performance-demo",
+  "homepage": "https://jerekuusela.github.io/react-performance-demo",
   "dependencies": {
     "@reduxjs/toolkit": "^1.8.5",
     "react": "^18.2.0",
