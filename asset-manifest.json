@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/react-performance-demo/static/css/main.92b0da0a.css",
-    "main.js": "/react-performance-demo/static/js/main.e615defe.js",
+    "main.js": "/react-performance-demo/static/js/main.f4e21af5.js",
     "static/media/brand-icons.svg": "/react-performance-demo/static/media/brand-icons.6729d29753e000c17489.svg",
     "static/media/icons.svg": "/react-performance-demo/static/media/icons.62d9dae4e0040e81c980.svg",
     "static/media/outline-icons.svg": "/react-performance-demo/static/media/outline-icons.9c4845b4b41ef40a22fa.svg",
@@ -20,10 +20,10 @@
     "static/media/outline-icons.woff2": "/react-performance-demo/static/media/outline-icons.687a4990ea22bb1a49d4.woff2",
     "index.html": "/react-performance-demo/index.html",
     "main.92b0da0a.css.map": "/react-performance-demo/static/css/main.92b0da0a.css.map",
-    "main.e615defe.js.map": "/react-performance-demo/static/js/main.e615defe.js.map"
+    "main.f4e21af5.js.map": "/react-performance-demo/static/js/main.f4e21af5.js.map"
   },
   "entrypoints": [
     "static/css/main.92b0da0a.css",
-    "static/js/main.e615defe.js"
+    "static/js/main.f4e21af5.js"
   ]
 }
