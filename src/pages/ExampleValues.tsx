@@ -56,11 +56,6 @@ const ExampleValues = () => {
         Component={FromReduxShallow}
       />
       <DataList
-        name={`${component}FromReduxShallowWithoutMemo`}
-        header='useSelector has a bit surpising feature that the memoization is forgotten when the parent causes the render.'
-        Component={FromReduxShallowWithoutMemo}
-      />
-      <DataList
         name={`${component}FromReselect`}
         header='This works better with reselect library.'
         Component={FromReselect}
@@ -118,15 +113,6 @@ const FromRedux = ({ item, instance }: ItemProps) => {
 }
 
 const FromReduxShallow = ({ item, instance }: ItemProps) => {
-  const { index } = item
-  return (
-    <MemoizedNameInputs item={item} instance={instance}>
-      <MemoizedFullNameRedux instance={instance} index={index} selector={useFullNameWithShallow} />
-    </MemoizedNameInputs>
-  )
-}
-
-const FromReduxShallowWithoutMemo = ({ item, instance }: ItemProps) => {
   const { index } = item
   return (
     <MemoizedNameInputs item={item} instance={instance}>
